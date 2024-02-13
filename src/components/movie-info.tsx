@@ -1,5 +1,6 @@
-import { API_URL, Movie } from "@/app/(home)/page";
+import { MovieProps } from '@/utiles/movie.interface';
 import styles from '../styles/movie-info.module.css'
+import { API_URL } from "@/utiles/constants";
 
 
 export async function getMovie(id: string) {
@@ -11,7 +12,7 @@ export async function getMovie(id: string) {
 
 
 export default async function MovieInfo({ id }: { id: string }) {
-    const movie: Movie = await getMovie(id)
+    const movie: MovieProps = await getMovie(id)
 
     return (
         <div className={styles.container}>
