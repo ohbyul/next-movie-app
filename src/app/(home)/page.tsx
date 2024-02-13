@@ -24,7 +24,8 @@ export interface Movie {
 }
 
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL
+// export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_URL = 'https://nomad-movies.nomadcoders.workers.dev/'
 
 async function getMovies() {
   await new Promise((resolve) => setTimeout(resolve, 1000))   //loadingPage 출력 1초 텀
