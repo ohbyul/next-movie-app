@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = { title: "Home" };
 
@@ -22,29 +23,34 @@ interface Movie {
 }
 
 
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
+export const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 async function getMovies() {
-  const res = await fetch(NEXT_PUBLIC_API_URL + 'movies')
+  await new Promise((resolve) => setTimeout(resolve, 1000))   //loadingPage 출력 1초 텀
+  const res = await fetch(API_URL + 'movies')
   const json = await res.json()
 
   return json;
 }
 export default async function Home() {
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+  await new Promise((resolve) => setTimeout(resolve, 1000))
   const movies: Movie[] = await getMovies();
 
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {
-        movies?.map((movie, index) => {
-          return (
-            <div>
-              {movie.id}
-            </div>
-          )
-        })
-      }
+      <ul>
+        {
+          movies?.map((movie, index) => {
+            return (
+              <li key={movie.id}>
+                <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+              </li>
+            )
+          })
+        }
+      </ul>
+
     </main>
   );
 }
