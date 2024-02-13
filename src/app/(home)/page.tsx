@@ -1,11 +1,11 @@
+import Movie from "@/components/movie";
 import { Metadata } from "next";
-import { headers } from "next/headers";
-import Image from "next/image";
-import Link from "next/link";
+import styles from '../../styles/home.module.css'
+
 
 export const metadata: Metadata = { title: "Home" };
 
-interface Movie {
+export interface Movie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -20,6 +20,7 @@ interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  homepage: string;
 }
 
 
@@ -38,19 +39,14 @@ export default async function Home() {
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <ul>
-        {
-          movies?.map((movie, index) => {
-            return (
-              <li key={movie.id}>
-                <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
-              </li>
-            )
-          })
-        }
-      </ul>
-
-    </main>
+    <div className={styles.container}>
+      {
+        movies?.map((movie, index) => {
+          return (
+            <Movie key={movie.id} title={movie.title} id={movie.id} poster_path={movie.poster_path} />
+          )
+        })
+      }
+    </div>
   );
 }

@@ -1,10 +1,22 @@
 import { API_URL } from "@/app/(home)/page";
-import MovieInfo from "@/components/movie-info";
+import MovieInfo, { getMovie } from "@/components/movie-info";
 import MovieVideos from "@/components/movie-videos";
 import { Metadata } from "next"
 import { Suspense } from "react";
 
-export const metadata: Metadata = { title: 'Movie' }
+interface IParams {
+    params: {
+        id: string;
+    }
+}
+
+// export const metadata: Metadata = { title: 'Movie' }
+export async function generateMetadata({ params: { id } }: IParams) {
+    const result = await getMovie(id)
+    return {
+        title: result.title
+    }
+}
 
 // async function getMovie(id: string) {
 //     const res = await fetch(`${API_URL}movies/${id}`)
@@ -20,11 +32,7 @@ export const metadata: Metadata = { title: 'Movie' }
 //     return json;
 // }
 
-export default async function MovieDatail({
-    params: { id }
-}: {
-    params: { id: string }
-}) {
+export default async function MovieDatail({ params: { id } }: IParams) {
 
     // 직렬 호출
     // const movie = await getMovie(id);
